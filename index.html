@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <!--
    ______                            __
@@ -19,583 +19,1049 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deal Room</title>
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Raleway:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --bg: hsl(222, 55%, 7%);
+  --surface: hsl(222, 40%, 10%);
+  --surface-2: hsl(222, 35%, 13%);
+  --surface-3: hsl(222, 30%, 16%);
+  --border: hsl(222, 20%, 18%);
+  --border-hover: hsl(222, 20%, 24%);
+  --text: hsl(210, 20%, 95%);
+  --text-muted: hsl(215, 10%, 55%);
+  --text-faint: hsl(215, 10%, 38%);
+  --copper: #CC8568;
+  --copper-dim: rgba(204, 133, 104, 0.12);
+  --copper-hover: #d9977d;
+  --green: #6daa45;
+  --green-dim: rgba(109, 170, 69, 0.12);
+  --amber: #e8af34;
+  --amber-dim: rgba(232, 175, 52, 0.1);
+  --red: #dd6974;
+  --red-dim: rgba(221, 105, 116, 0.1);
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Raleway', system-ui, sans-serif;
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
   --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
   --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
-  --space-16: 4rem; --space-20: 5rem;
-  --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
-  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-theme="dark"] {
-  --color-bg: #0f0f10;
-  --color-surface: #18181b;
-  --color-surface-2: #1e1e22;
-  --color-surface-3: #27272b;
-  --color-border: #2e2e33;
-  --color-border-hover: #3f3f46;
-  --color-text: #e4e4e7;
-  --color-text-muted: #a1a1aa;
-  --color-text-faint: #71717a;
-  --color-primary: #4f98a3;
-  --color-primary-dim: rgba(79, 152, 163, 0.12);
-  --color-primary-hover: #5eaab6;
-  --color-accent-green: #6daa45;
-  --color-accent-green-dim: rgba(109, 170, 69, 0.12);
-  --color-accent-amber: #e8af34;
-  --color-accent-amber-dim: rgba(232, 175, 52, 0.1);
-  --color-accent-red: #dd6974;
-  --color-accent-red-dim: rgba(221, 105, 116, 0.1);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-  --shadow-lg: 0 12px 40px rgba(0,0,0,0.5);
+  --space-16: 4rem;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --ease: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --sidebar-w: 260px;
 }
 
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100dvh;
   font-family: var(--font-body);
-  font-size: var(--text-base);
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
-}
-
-/* ---- HEADER ---- */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(15, 15, 16, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--color-border);
-  padding: var(--space-4) var(--space-6);
-}
-
-.header-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+  color: var(--text);
+  background: var(--bg);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
-.logo {
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100dvh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+.sidebar-header {
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   gap: var(--space-3);
 }
-
-.logo svg {
-  width: 28px;
-  height: 28px;
-  color: var(--color-primary);
-}
-
-.logo-text {
-  font-size: var(--text-lg);
+.sidebar-logo { display: flex; flex-direction: column; }
+.sidebar-brand {
+  font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-}
-
-.header-meta {
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
-}
-
-/* ---- LAYOUT ---- */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-6) var(--space-20);
-}
-
-/* ---- STATS BAR ---- */
-.stats-bar {
-  display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-10);
-  flex-wrap: wrap;
-}
-
-.stat-card {
-  flex: 1;
-  min-width: 160px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
-}
-
-.stat-label {
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--copper);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+}
+.sidebar-sub { font-size: 11px; color: var(--text-muted); }
+.sidebar-content { flex: 1; padding: var(--space-4) 0; overflow-y: auto; }
+.sidebar-group-label {
+  font-size: 10px;
   font-weight: 600;
-  margin-bottom: var(--space-1);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: var(--space-3) var(--space-5) var(--space-2);
 }
+.sidebar-nav { list-style: none; }
+.sidebar-nav li a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-5);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all var(--ease);
+}
+.sidebar-nav li a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.sidebar-nav li a.active { color: var(--copper); border-left-color: var(--copper); background: var(--copper-dim); }
+.sidebar-nav li a svg { width: 16px; height: 16px; flex-shrink: 0; }
+.sidebar-footer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border); }
+.sidebar-footer a { font-size: 11px; color: var(--text-faint); text-decoration: none; }
+.sidebar-footer a:hover { color: var(--text-muted); }
 
-.stat-value {
-  font-size: var(--text-xl);
+/* ── MOBILE ── */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  top: var(--space-3); left: var(--space-3);
+  z-index: 200;
+  width: 40px; height: 40px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-toggle svg { width: 20px; height: 20px; }
+
+/* ── MAIN ── */
+.main { flex: 1; margin-left: var(--sidebar-w); min-height: 100dvh; }
+.main-header {
+  position: sticky; top: 0; z-index: 50;
+  background: hsla(222, 55%, 7%, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4) var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
+.page-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.content { padding: var(--space-6) var(--space-8) var(--space-16); max-width: 1060px; }
 
-.stat-value.teal { color: var(--color-primary); }
-.stat-value.green { color: var(--color-accent-green); }
-.stat-value.amber { color: var(--color-accent-amber); }
-
-/* ---- DEAL CARD ---- */
-.deal-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+/* ── FACILITY SECTION ── */
+.facility-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-6);
+  padding: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+.facility-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.facility-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.facility-meta {
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.facility-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.facility-item {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+}
+.facility-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+.facility-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+.facility-value.copper { color: var(--copper); }
+.facility-value.green { color: var(--green); }
+
+/* ── USE OF FUNDS TABLE ── */
+.funds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.funds-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+.funds-table td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+  vertical-align: top;
+}
+.funds-table tr:last-child td { border-bottom: none; }
+.funds-table .amount { color: var(--text); font-weight: 600; white-space: nowrap; }
+.funds-table .note { font-size: 12px; color: var(--text-faint); }
+
+/* ── DEAL CARD ── */
+.deal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
   overflow: hidden;
-  transition: border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+  transition: border-color var(--ease);
 }
-
-.deal-card:hover {
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-md);
-}
-
+.deal-card:hover { border-color: var(--border-hover); }
 .deal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-6);
   cursor: pointer;
   user-select: none;
   gap: var(--space-4);
 }
-
-.deal-title-block {
-  flex: 1;
-  min-width: 0;
-}
-
+.deal-title-block { flex: 1; min-width: 0; }
 .deal-entity {
-  font-size: var(--text-lg);
+  font-family: var(--font-display);
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--color-text);
-  margin-bottom: var(--space-1);
+  margin-bottom: 2px;
 }
-
-.deal-subtitle {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-}
-
-.deal-badges {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-  flex-shrink: 0;
-}
-
+.deal-subtitle { font-size: 12px; color: var(--text-muted); }
+.deal-badges { display: flex; gap: var(--space-2); align-items: center; flex-shrink: 0; }
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
+  letter-spacing: 0.3px;
 }
-
-.badge-active {
-  background: var(--color-accent-green-dim);
-  color: var(--color-accent-green);
-}
-
-.badge-review {
-  background: var(--color-accent-amber-dim);
-  color: var(--color-accent-amber);
-}
-
-.badge-amount {
-  background: var(--color-primary-dim);
-  color: var(--color-primary);
-}
-
+.badge-active  { background: var(--green-dim); color: var(--green); }
+.badge-review  { background: var(--amber-dim); color: var(--amber); }
+.badge-amount  { background: var(--copper-dim); color: var(--copper); }
+.badge-type    { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+.badge-refi    { background: var(--amber-dim); color: var(--amber); }
 .chevron {
-  width: 20px;
-  height: 20px;
-  color: var(--color-text-faint);
+  width: 18px; height: 18px;
+  color: var(--text-faint);
   transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
 }
-
-.deal-card.open .chevron {
-  transform: rotate(180deg);
-}
-
-/* ---- DEAL BODY (expandable) ---- */
+.deal-card.open .chevron { transform: rotate(180deg); }
 .deal-body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.deal-card.open .deal-body {
-  max-height: 2000px;
-}
-
+.deal-card.open .deal-body { max-height: 5000px; }
 .deal-content {
   padding: 0 var(--space-6) var(--space-6);
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--border);
 }
 
+/* ── TERMS GRID ── */
 .terms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--space-4);
-  padding-top: var(--space-6);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+  padding-top: var(--space-5);
   margin-bottom: var(--space-6);
 }
-
 .term-item {
-  background: var(--color-surface-2);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
 }
-
 .term-label {
-  font-size: var(--text-xs);
-  color: var(--color-text-faint);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  margin-bottom: var(--space-1);
+  color: var(--text-faint);
+  margin-bottom: 2px;
 }
+.term-value { font-size: 13px; font-weight: 600; }
+.term-value.copper { color: var(--copper); }
 
-.term-value {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.term-value.highlight { color: var(--color-primary); }
-
-/* ---- KEY HIGHLIGHTS ---- */
-.highlights-section {
-  margin-bottom: var(--space-6);
-}
-
-.highlights-title {
-  font-size: var(--text-sm);
+/* ── SECTION HEADERS ── */
+.section-title {
+  font-size: 11px;
   font-weight: 700;
-  color: var(--color-text-muted);
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-4);
+  color: var(--copper);
+  margin-bottom: var(--space-3);
 }
 
-.highlight-list {
+/* ── SUMMARY LIST ── */
+.summary-section { margin-bottom: var(--space-6); }
+.summary-list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
-
-.highlight-list li {
+.summary-list li {
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  line-height: 1.5;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
 }
-
-.highlight-list li::before {
+.summary-list li::before {
   content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--color-primary);
+  width: 5px; height: 5px;
+  background: var(--copper);
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 7px;
 }
 
-/* ---- DOCUMENTS ---- */
-.docs-section {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
+/* ── DOCUMENTS ── */
+.docs-section { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6); }
 .doc-link {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
-  background: var(--color-surface-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  color: var(--color-text);
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
   text-decoration: none;
-  font-size: var(--text-sm);
+  font-size: 13px;
   font-weight: 500;
-  transition: background var(--transition-interactive), border-color var(--transition-interactive);
+  transition: all var(--ease);
 }
-
-.doc-link:hover {
-  background: var(--color-surface-2);
-  border-color: var(--color-primary);
-}
-
-.doc-link svg {
-  width: 18px;
-  height: 18px;
-  color: var(--color-primary);
-}
-
+.doc-link:hover { background: var(--surface-3); border-color: var(--copper); }
+.doc-link svg { width: 16px; height: 16px; color: var(--copper); }
 .doc-link .file-size {
-  color: var(--color-text-faint);
-  font-size: var(--text-xs);
-  margin-left: var(--space-1);
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-/* ---- EMPTY STATE ---- */
-.empty-state {
-  text-align: center;
-  padding: var(--space-16) var(--space-6);
-  color: var(--color-text-faint);
+/* ── COMMENTARY TOGGLE ── */
+.commentary-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-body);
 }
-
-.empty-state svg {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto var(--space-4);
-  opacity: 0.4;
+.commentary-toggle:hover { color: var(--text-muted); border-color: var(--border-hover); }
+.commentary-toggle svg {
+  width: 14px; height: 14px;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.empty-state p {
-  font-size: var(--text-sm);
-  max-width: 360px;
-  margin: 0 auto;
+.commentary-toggle.open svg { transform: rotate(180deg); }
+.commentary-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+.commentary-body.open { max-height: 3000px; }
+.commentary-content { padding-top: var(--space-4); }
 
-/* ---- FOOTER ---- */
-.footer {
-  border-top: 1px solid var(--color-border);
-  padding: var(--space-6);
-  text-align: center;
-}
-
-.footer a {
-  color: var(--color-text-faint);
-  font-size: var(--text-xs);
-  text-decoration: none;
-  transition: color var(--transition-interactive);
-}
-
-.footer a:hover { color: var(--color-text-muted); }
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 640px) {
-  .stats-bar { flex-direction: column; }
-  .deal-header { flex-wrap: wrap; }
-  .deal-badges { width: 100%; }
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); transition: transform 300ms ease; }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-toggle { display: flex; }
+  .main { margin-left: 0; }
+  .main-header { padding: var(--space-4); padding-left: 56px; }
+  .content { padding: var(--space-4); }
+  .facility-grid { grid-template-columns: 1fr 1fr; }
   .terms-grid { grid-template-columns: 1fr 1fr; }
-  .header-meta { display: none; }
+  .deal-header { flex-wrap: wrap; }
+  .deal-badges { width: 100%; margin-top: var(--space-2); }
+  .funds-table { font-size: 12px; }
 }
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-        <polyline points="10 9 9 9 8 9"/>
-      </svg>
-      <span class="logo-text">Deal Room</span>
-    </div>
-    <span class="header-meta">Confidential</span>
-  </div>
-</header>
+<!-- MOBILE TOGGLE -->
+<button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle menu">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
 
-<main class="container">
-
-  <!-- STATS BAR -->
-  <div class="stats-bar">
-    <div class="stat-card">
-      <div class="stat-label">Active Deals</div>
-      <div class="stat-value teal">1</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Total Capital</div>
-      <div class="stat-value green">$400,000</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Pending Review</div>
-      <div class="stat-value amber">1</div>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <svg width="28" height="22" viewBox="0 0 80 22" fill="none">
+      <text x="0" y="18" font-family="Raleway, sans-serif" font-weight="700" font-size="20" fill="#CC8568" letter-spacing="-0.5">AEP</text>
+      <rect x="44" y="14" width="4" height="4" fill="#CC8568"/>
+    </svg>
+    <div class="sidebar-logo">
+      <div class="sidebar-brand">Deal Room</div>
+      <div class="sidebar-sub">Trust Portfolio Review</div>
     </div>
   </div>
+  <div class="sidebar-content">
+    <div class="sidebar-group-label">Facility</div>
+    <ul class="sidebar-nav">
+      <li><a href="#facility" class="active" onclick="setActive(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        Leader Bank LOC
+      </a></li>
+    </ul>
+    <div class="sidebar-group-label">Deals</div>
+    <ul class="sidebar-nav">
+      <li><a href="#deal-1" onclick="openDeal('deal-1'); setActive(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Turnout Gear Cleaners
+      </a></li>
+      <li><a href="#deal-2" onclick="openDeal('deal-2'); setActive(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        SALTYSHIFT4 (Truck)
+      </a></li>
+      <li><a href="#deal-3" onclick="openDeal('deal-3'); setActive(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        KCP (Atomus)
+      </a></li>
+    </ul>
+  </div>
+  <div class="sidebar-footer">
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+  </div>
+</aside>
 
-  <!-- DEAL 1: Turnout Gear Cleaners -->
-  <div class="deal-card open" id="deal-1">
-    <div class="deal-header" onclick="toggleDeal('deal-1')">
-      <div class="deal-title-block">
-        <div class="deal-entity">Turnout Gear Cleaners, LLC</div>
-        <div class="deal-subtitle">Financing Agreement &mdash; Anne P Revocable Trust</div>
-      </div>
-      <div class="deal-badges">
-        <span class="badge badge-review">Pending Review</span>
-        <span class="badge badge-amount">$400K</span>
-      </div>
-      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </div>
-    <div class="deal-body">
-      <div class="deal-content">
+<!-- MAIN -->
+<main class="main">
+  <header class="main-header">
+    <span class="page-title">Trust Portfolio</span>
+    <span class="page-meta">Confidential &mdash; as of 2/28/26</span>
+  </header>
 
-        <!-- KEY TERMS GRID -->
-        <div class="terms-grid">
-          <div class="term-item">
-            <div class="term-label">Principal</div>
-            <div class="term-value highlight">$400,000</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Net Proceeds</div>
-            <div class="term-value">$396,000</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Financing Fee</div>
-            <div class="term-value">1.0% ($4,000)</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">PIK Interest</div>
-            <div class="term-value">5.0% / yr (compounds)</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Cash Interest</div>
-            <div class="term-value">8.5% / yr</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Term</div>
-            <div class="term-value">60 months (5 yrs)</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Grace Period</div>
-            <div class="term-value">6 months (no payments)</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Monthly Payment</div>
-            <div class="term-value">~$6,200 – $6,300</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Principal Amort.</div>
-            <div class="term-value">10% / yr ($3,333/mo)</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Balloon at Maturity</div>
-            <div class="term-value highlight">~$315,000</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Security</div>
-            <div class="term-value">Unsecured</div>
-          </div>
-          <div class="term-item">
-            <div class="term-label">Default Rate</div>
-            <div class="term-value">18% / yr</div>
+  <div class="content">
+
+    <!-- ═══════════════════════════════════════════
+         LEADER BANK LINE OF CREDIT
+         ═══════════════════════════════════════════ -->
+    <div class="facility-card" id="facility">
+      <div class="facility-header">
+        <div>
+          <div class="facility-title">Leader Bank &mdash; Line of Credit</div>
+          <div class="facility-meta" style="margin-top:4px;">Pledged Asset Line (PLAL)</div>
+        </div>
+        <div class="facility-meta">As of 2/28/26 (per statement)</div>
+      </div>
+
+      <!-- RATE CALLOUT -->
+      <div style="display: flex; gap: var(--space-4); margin-bottom: var(--space-5); flex-wrap: wrap;">
+        <div style="flex:1; min-width: 200px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);">
+          <div class="facility-label">Current Rate (Live)</div>
+          <div style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--copper); letter-spacing: -0.02em;">5.38%</div>
+          <div style="font-size: 11px; color: var(--text-faint); margin-top: 2px;">SOFR 3.63% + 1.75% margin</div>
+          <div style="font-size: 10px; color: var(--text-faint); margin-top: 2px;">SOFR as of 3/24/26 &mdash; NY Fed</div>
+        </div>
+        <div style="flex:1; min-width: 200px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);">
+          <div class="facility-label">Statement Rate (Feb 2025)</div>
+          <div style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.02em;">6.15%</div>
+          <div style="font-size: 11px; color: var(--text-faint); margin-top: 2px;">Per Leader Bank billing statement</div>
+          <div style="font-size: 10px; color: var(--text-faint); margin-top: 2px;">Statement balance: $556,581.23</div>
+        </div>
+        <div style="flex:1; min-width: 200px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);">
+          <div class="facility-label">Statement Rate (Feb 2026)</div>
+          <div style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.02em;">5.50%</div>
+          <div style="font-size: 11px; color: var(--text-faint); margin-top: 2px;">Per Leader Bank Feb 2026 statement</div>
+          <div style="font-size: 10px; color: var(--text-faint); margin-top: 2px;">Balance: $1,904,169</div>
+        </div>
+      </div>
+
+      <div class="facility-grid">
+        <div class="facility-item"><div class="facility-label">Approved Facility</div><div class="facility-value copper">$6,285,000</div></div>
+        <div class="facility-item"><div class="facility-label">Current Balance (2/28/26)</div><div class="facility-value">$1,904,169</div></div>
+        <div class="facility-item"><div class="facility-label">Available Credit</div><div class="facility-value green">$3,199,779</div></div>
+        <div class="facility-item"><div class="facility-label">Collateral</div><div class="facility-value">$8,119,897</div></div>
+        <div class="facility-item"><div class="facility-label">LTV Ratio</div><div class="facility-value">23.5%</div></div>
+        <div class="facility-item"><div class="facility-label">Margin</div><div class="facility-value">1.75% over SOFR</div></div>
+        <div class="facility-item"><div class="facility-label">Paydown Cleared</div><div class="facility-value">$250,000 (Sep 2025)</div></div>
+        <div class="facility-item"><div class="facility-label">Payoff Capability</div><div class="facility-value">60 days (full line)</div></div>
+      </div>
+
+      <!-- USE OF FUNDS -->
+      <div class="section-title">Use of Funds</div>
+      <table class="funds-table">
+        <thead>
+          <tr>
+            <th>Draw</th>
+            <th>Amount</th>
+            <th>Spread</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Illinois franchise (SALTYSHIFT4)</td>
+            <td class="amount">$153,000</td>
+            <td>~7.5% positive spread</td>
+            <td class="note">13% fixed rate vs. 5.50% cost of funds (Feb 2026)</td>
+          </tr>
+          <tr>
+            <td>California franchise (Turnout Gear Cleaners)</td>
+            <td class="amount">$400,000</td>
+            <td>~3% positive spread</td>
+            <td class="note">8.5% cash yield vs. 5.50% cost of funds (Feb 2026). 49% ownership. Refi pending with a local bank; $400K payoff scheduled.</td>
+          </tr>
+          <tr>
+            <td>Kitchen Concepts Plus (via AEP equity raise)</td>
+            <td class="amount">$1,300,000</td>
+            <td>&mdash;</td>
+            <td class="note">Trust provided $1.3M of ~$2.3M total raised into AEP. Trust owns ~56.5% of AEP vehicle; AEP owns 64.3% of KCP = trust indirectly owns ~36.3% of KCP. Continuing to sell down post-close to de-risk.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- PORTFOLIO P&L -->
+      <div style="margin-top: var(--space-5); margin-bottom: var(--space-6);">
+        <div class="section-title">Portfolio P&amp;L &mdash; Since Inception (Aug 2024 &ndash; Feb 2026)</div>
+
+        <!-- WHAT WE DEPLOYED -->
+        <table class="funds-table">
+          <thead>
+            <tr>
+              <th colspan="2">Capital Deployed</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SALTYSHIFT4 (IL franchise)</td>
+              <td class="amount">$153,000</td>
+              <td class="note">Aug 22, 2024</td>
+            </tr>
+            <tr>
+              <td>Turnout Gear Cleaners (CA franchise)</td>
+              <td class="amount">$400,000</td>
+              <td class="note">Feb 4, 2025</td>
+            </tr>
+            <tr>
+              <td>KCP / Atomus (equity)</td>
+              <td class="amount">$1,600,000</td>
+              <td class="note">Apr 25, 2025</td>
+            </tr>
+            <tr style="border-top: 2px solid var(--border);">
+              <td style="font-weight: 600; color: var(--text);">Total deployed</td>
+              <td class="amount" style="color: var(--text);">$2,153,000</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- WHAT IT COST US -->
+        <table class="funds-table" style="margin-top: var(--space-4);">
+          <thead>
+            <tr>
+              <th colspan="2">Cost of Funds (Leader Bank Interest)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024 (Aug &ndash; Dec)</td>
+              <td class="amount" style="color: #e05555;">($3,676)</td>
+              <td class="note">$153K balance &bull; avg 6.6% rate</td>
+            </tr>
+            <tr>
+              <td>2025 (Jan &ndash; Dec)</td>
+              <td class="amount" style="color: #e05555;">($92,867)</td>
+              <td class="note">Balance grew from $154K &rarr; $2.15M &rarr; $1.9M</td>
+            </tr>
+            <tr>
+              <td>2026 (Jan &ndash; Feb)</td>
+              <td class="amount" style="color: #e05555;">($16,929)</td>
+              <td class="note">$1.9M balance &bull; 5.50% rate</td>
+            </tr>
+            <tr style="border-top: 2px solid var(--border);">
+              <td style="font-weight: 600; color: var(--text);">Total interest paid</td>
+              <td class="amount" style="color: #e05555; font-size: 14px;">($113,472)</td>
+              <td class="note">Per Leader Bank statements</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- WHAT PEOPLE PAID US -->
+        <table class="funds-table" style="margin-top: var(--space-4);">
+          <thead>
+            <tr>
+              <th colspan="2">Cash Due / Received (per agreements &amp; statements)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SALTYSHIFT4 &mdash; IO + P&amp;I payments due</td>
+              <td class="amount" style="color: var(--green);">$48,960</td>
+              <td class="note">Per agreement: 12 &times; $1,657.50 IO + 6 &times; $4,845 P&amp;I</td>
+            </tr>
+            <tr>
+              <td>Turnout Gear &mdash; cash interest due</td>
+              <td class="amount" style="color: var(--green);">$17,000</td>
+              <td class="note">Per agreement: ~6 months &times; ~$2,833/mo (8.5% on ~$400K post-grace)</td>
+            </tr>
+            <tr>
+              <td>Turnout Gear &mdash; financing fee (1%)</td>
+              <td class="amount" style="color: var(--green);">$4,000</td>
+              <td class="note">Paid at closing</td>
+            </tr>
+            <tr>
+              <td>KCP &mdash; principal returned (late investors)</td>
+              <td class="amount" style="color: var(--green);">$250,000</td>
+              <td class="note">Sep 12, 2025 &bull; principal only, no interest</td>
+            </tr>
+            <tr style="border-top: 2px solid var(--border);">
+              <td style="font-weight: 600; color: var(--text);">Total due / received</td>
+              <td class="amount" style="color: var(--green); font-size: 14px;">$319,960</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- NET POSITION -->
+        <div style="margin-top: var(--space-4); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="facility-label">Net Cash Position</div>
+              <div style="font-size: 11px; color: var(--text-faint); margin-top: 2px;">Due/received ($319,960) less interest paid ($113,472)</div>
+            </div>
+            <div style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -0.02em;">+$206,488</div>
           </div>
         </div>
 
-        <!-- KEY HIGHLIGHTS -->
-        <div class="highlights-section">
-          <div class="highlights-title">Key Highlights</div>
-          <ul class="highlight-list">
-            <li>Lender is the Anne P Revocable Trust (Trustee: Anne Prendergast), governed by Massachusetts law</li>
-            <li>Dual interest structure: 5% PIK compounds on top of the balance while 8.5% cash interest is paid monthly after grace period</li>
-            <li>Personal guarantees from Luke Prendergast, Samuel Birger, and Jackson Rimpas &mdash; joint & several, no release provisions</li>
-            <li>Borrower cannot incur debt over $50K, make distributions if past due, or sell assets without lender consent</li>
-            <li>Quarterly and annual financial statements required to lender</li>
-            <li>Lender can pass through its own financing costs (Section 5) with no cap &mdash; open-ended obligation</li>
-            <li>Prepayment allowed at any time with no penalty</li>
-            <li>Late charge: 10% of overdue amount or $25, whichever is greater</li>
+        <!-- WHO OWES US -->
+        <table class="funds-table" style="margin-top: var(--space-5);">
+          <thead>
+            <tr>
+              <th>Outstanding Receivables</th>
+              <th>Owed</th>
+              <th>Terms</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SALTYSHIFT4 (IL franchise)</td>
+              <td class="amount">~$104,040</td>
+              <td class="note">$153K less $48,960 paid = ~$104K &bull; $4,845/mo through Sep 2029</td>
+            </tr>
+            <tr>
+              <td>Turnout Gear (CA franchise)</td>
+              <td class="amount">~$402,000</td>
+              <td class="note">~$380K principal + ~$22K accrued PIK &mdash; balloon at refi</td>
+            </tr>
+            <tr style="border-top: 2px solid var(--border);">
+              <td style="font-weight: 600; color: var(--text);">Total owed to trust</td>
+              <td class="amount" style="color: var(--copper); font-size: 14px;">~$506,000</td>
+              <td class="note">Turnout Gear refi expected near-term</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size: 11px; color: var(--text-faint); margin-top: var(--space-2);">KCP is equity, not debt &mdash; no receivable. Trust owns ~36.3% of KCP indirectly.</div>
+      </div>
+
+      <div style="margin-top: var(--space-5);">
+        <div class="summary-section" style="margin-bottom:0;">
+          <div class="section-title">Key Notes</div>
+          <ul class="summary-list">
+            <li>Total interest paid on Leader Bank line: <strong>$113,472</strong> (per statements Aug 2024 &ndash; Feb 2026)</li>
+            <li>$250K principal paydown cleared Sep 12, 2025 &mdash; balance reduced from $2.15M to $1.9M</li>
+            <li>Turnout Gear refi pending &mdash; ~$402K balloon payment expected; frees $400K of line capacity</li>
+            <li>SALTYSHIFT4 paying $4,845/mo on schedule &mdash; fully amortizes by Sep 2029</li>
+            <li>Complete power to pay off full line within 60 days if needed</li>
+            <li>Current monthly interest: ~$8,024 at 5.50% on $1.9M balance</li>
           </ul>
         </div>
-
-        <!-- DOCUMENTS -->
-        <div class="highlights-title">Documents</div>
-        <div class="docs-section">
-          <a href="docs/Turnout-Gear-Cleaners-LLC-Luke-Jackson-Sam.pdf" target="_blank" class="doc-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-            </svg>
-            Financing Agreement
-            <span class="file-size">PDF</span>
-          </a>
+        <div style="margin-top: var(--space-5);">
+          <div class="section-title">Statements</div>
+          <div class="docs-section" style="margin-bottom: 0;">
+            <a href="docs/Leader-Bank-Statement-Feb-2025.pdf" target="_blank" class="doc-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Leader Bank Statement &mdash; Feb 2025 <span class="file-size">PDF</span>
+            </a>
+          </div>
         </div>
-
       </div>
     </div>
+
+    <!-- ═══════════════════════════════════════════
+         DEAL 1: Turnout Gear Cleaners ($400K CA)
+         ═══════════════════════════════════════════ -->
+    <div class="deal-card" id="deal-1">
+      <div class="deal-header" onclick="toggleDeal('deal-1')">
+        <div class="deal-title-block">
+          <div class="deal-entity">Turnout Gear Cleaners, LLC</div>
+          <div class="deal-subtitle">Financing Agreement &mdash; Anne P Revocable Trust &mdash; California Franchise (49% Ownership)</div>
+        </div>
+        <div class="deal-badges">
+          <span class="badge badge-type">Debt</span>
+          <span class="badge badge-refi">Refi by YE</span>
+          <span class="badge badge-amount">$400K</span>
+        </div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="deal-body">
+        <div class="deal-content">
+
+          <div class="section-title" style="padding-top: var(--space-5);">Deal Terms</div>
+          <div class="terms-grid" style="padding-top: var(--space-2);">
+            <div class="term-item"><div class="term-label">Principal</div><div class="term-value copper">$400,000</div></div>
+            <div class="term-item"><div class="term-label">Net Proceeds</div><div class="term-value">$396,000</div></div>
+            <div class="term-item"><div class="term-label">Financing Fee</div><div class="term-value">1.0% ($4,000)</div></div>
+            <div class="term-item"><div class="term-label">PIK Interest</div><div class="term-value">5.0% / yr (compounds)</div></div>
+            <div class="term-item"><div class="term-label">Cash Interest</div><div class="term-value">8.5% / yr</div></div>
+            <div class="term-item"><div class="term-label">Term</div><div class="term-value">60 months (5 yrs)</div></div>
+            <div class="term-item"><div class="term-label">Grace Period</div><div class="term-value">6 months (no payments)</div></div>
+            <div class="term-item"><div class="term-label">Monthly Payment</div><div class="term-value">~$6,200 &ndash; $6,300</div></div>
+            <div class="term-item"><div class="term-label">Principal Amort.</div><div class="term-value">10% / yr ($3,333/mo)</div></div>
+            <div class="term-item"><div class="term-label">Balloon at Maturity</div><div class="term-value copper">~$315,000</div></div>
+            <div class="term-item"><div class="term-label">Security</div><div class="term-value">Unsecured</div></div>
+            <div class="term-item"><div class="term-label">Default Rate</div><div class="term-value">18% / yr</div></div>
+            <div class="term-item"><div class="term-label">Prepayment</div><div class="term-value">Allowed, no penalty</div></div>
+            <div class="term-item"><div class="term-label">Governing Law</div><div class="term-value">Massachusetts</div></div>
+            <div class="term-item"><div class="term-label">Late Charge</div><div class="term-value">10% of overdue or $25</div></div>
+            <div class="term-item"><div class="term-label">Ownership Stake</div><div class="term-value copper">49%</div></div>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Parties &amp; Guarantors</div>
+            <ul class="summary-list">
+              <li>Lender: Anne P Revocable Trust (Trustee: Anne Prendergast)</li>
+              <li>Borrower: Turnout Gear Cleaners, LLC</li>
+              <li>Personal guarantees: Luke Prendergast, Samuel Birger, Jackson Rimpas &mdash; joint &amp; several, no release provisions</li>
+            </ul>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Key Provisions</div>
+            <ul class="summary-list">
+              <li>Dual interest: 5% PIK compounds on the balance; 8.5% cash paid monthly after grace period</li>
+              <li>Borrower cannot incur debt over $50K, make distributions if past due, or sell assets without lender consent</li>
+              <li>Quarterly and annual financial statements required</li>
+              <li>Lender may pass through its own financing costs (Section 5) with no cap</li>
+              <li>Scheduled for payoff / refinance by year-end &mdash; refinancing underway with a local bank</li>
+            </ul>
+          </div>
+
+          <div class="section-title">Documents</div>
+          <div class="docs-section">
+            <a href="docs/Turnout-Gear-Cleaners-LLC-Luke-Jackson-Sam.pdf" target="_blank" class="doc-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Financing Agreement <span class="file-size">PDF</span>
+            </a>
+          </div>
+
+          <button class="commentary-toggle" onclick="toggleCommentary(this)">
+            Commentary
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="commentary-body">
+            <div class="commentary-content">
+              <ul class="summary-list">
+                <li>~3% positive spread at current statement rate (8.5% cash yield vs. 5.50% PLAL rate)</li>
+                <li>Generates ~$12,000/yr in net spread income after PLAL carry cost on the $400K draw</li>
+                <li>Refi pending with a local bank &mdash; balloon payment (~$402K including accrued PIK) frees $400K of line capacity</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         DEAL 2: SALTYSHIFT4 ($153K IL)
+         ═══════════════════════════════════════════ -->
+    <div class="deal-card" id="deal-2">
+      <div class="deal-header" onclick="toggleDeal('deal-2')">
+        <div class="deal-title-block">
+          <div class="deal-entity">SALTYSHIFT4, LLC</div>
+          <div class="deal-subtitle">Franchise Truck Financing &mdash; Anne P Revocable Trust &mdash; Illinois Franchise</div>
+        </div>
+        <div class="deal-badges">
+          <span class="badge badge-type">Debt</span>
+          <span class="badge badge-active">Executed 8/20/24</span>
+          <span class="badge badge-amount">$153K</span>
+        </div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="deal-body">
+        <div class="deal-content">
+
+          <div class="section-title" style="padding-top: var(--space-5);">Deal Terms</div>
+          <div class="terms-grid" style="padding-top: var(--space-2);">
+            <div class="term-item"><div class="term-label">Principal</div><div class="term-value copper">$153,000</div></div>
+            <div class="term-item"><div class="term-label">Interest Rate</div><div class="term-value">13% fixed</div></div>
+            <div class="term-item"><div class="term-label">Term</div><div class="term-value">60 months (5 yrs)</div></div>
+            <div class="term-item"><div class="term-label">Effective Date</div><div class="term-value">August 20, 2024</div></div>
+            <div class="term-item"><div class="term-label">Months 1&ndash;12</div><div class="term-value">Interest-only: $1,657.50/mo</div></div>
+            <div class="term-item"><div class="term-label">Months 13&ndash;60</div><div class="term-value">P&amp;I: $4,845.00/mo</div></div>
+            <div class="term-item"><div class="term-label">Collateral</div><div class="term-value copper">Truck (1st lien)</div></div>
+            <div class="term-item"><div class="term-label">Truck VIN</div><div class="term-value">1HTEUMML0SS123328</div></div>
+            <div class="term-item"><div class="term-label">Purpose</div><div class="term-value">Truck buildout + $39,500 franchise fee</div></div>
+            <div class="term-item"><div class="term-label">Guarantee Burn-Off</div><div class="term-value">Start of 3rd term (if current)</div></div>
+            <div class="term-item"><div class="term-label">Prepayment</div><div class="term-value">No penalty (after 3rd term)</div></div>
+            <div class="term-item"><div class="term-label">Governing Law</div><div class="term-value">Massachusetts</div></div>
+            <div class="term-item"><div class="term-label">Late Charge</div><div class="term-value">10% of overdue or $25</div></div>
+            <div class="term-item"><div class="term-label">Non-Cancelable</div><div class="term-value">Yes</div></div>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Parties &amp; Guarantors</div>
+            <ul class="summary-list">
+              <li>Lender: Anne P Revocable Trust (Trustee: Anne Prendergast)</li>
+              <li>Borrower: SALTYSHIFT4, LLC (Illinois) &mdash; Redline Gear Cleaning franchisee</li>
+              <li>Personal guarantees: Ann Ellis, Cory Ellis, Tammy Bailey, Brian Bailey &mdash; joint &amp; several</li>
+              <li>Guarantee burn-off: released at start of third term if all payments current and no default</li>
+            </ul>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Amortization Schedule</div>
+            <ul class="summary-list">
+              <li><strong>Year 1</strong> (Sep 2024 &ndash; Sep 2025): $1,657.50/mo interest-only &mdash; balance remains $153,000</li>
+              <li><strong>Year 2</strong> (Sep 2025 &ndash; Sep 2026): $4,845/mo P&amp;I &mdash; balance to $114,750</li>
+              <li><strong>Year 3</strong> (Sep 2026 &ndash; Sep 2027): $4,845/mo P&amp;I &mdash; balance to $76,500</li>
+              <li><strong>Year 4</strong> (Sep 2027 &ndash; Sep 2028): $4,845/mo P&amp;I &mdash; balance to $38,250</li>
+              <li><strong>Year 5</strong> (Sep 2028 &ndash; Sep 2029): $4,845/mo P&amp;I &mdash; balance to $0</li>
+            </ul>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Key Provisions</div>
+            <ul class="summary-list">
+              <li>Secured by first-priority lien on truck &mdash; borrower cannot sell, lease, or dispose without lender consent</li>
+              <li>Borrower bears all risk of loss, theft, or damage; must pay all remaining payments if total loss</li>
+              <li>Non-cancelable &mdash; borrower cannot cancel for any reason; all payments made without offset</li>
+              <li>Franchise agreement dated October 3, 2023; truck delivered on or about August 10, 2024</li>
+            </ul>
+          </div>
+
+          <div class="section-title">Documents</div>
+          <div class="docs-section">
+            <a href="docs/Luke-Agreement.pdf" target="_blank" class="doc-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Financing Agreement <span class="file-size">PDF</span>
+            </a>
+            <a href="docs/Signature-2.pdf" target="_blank" class="doc-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Executed Signature Page <span class="file-size">PDF</span>
+            </a>
+          </div>
+
+          <button class="commentary-toggle" onclick="toggleCommentary(this)">
+            Commentary
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="commentary-body">
+            <div class="commentary-content">
+              <ul class="summary-list">
+                <li>~7.5% positive spread at current statement rate (13% fixed vs. 5.50% PLAL rate)</li>
+                <li>Highest-yielding position in the portfolio &mdash; generates ~$11,500/yr in net spread income after PLAL carry on the $153K draw</li>
+                <li>Combined spread income from both debt deals (~$23,500/yr) covers roughly a third of the KCP equity carry (~$74,000/yr on $1.35M); remainder offset by KCP principal paydowns</li>
+                <li>Fully secured with first lien on truck; four personal guarantees with burn-off provision</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         DEAL 3: KCP / Atomus ($1.3M Equity)
+         ═══════════════════════════════════════════ -->
+    <div class="deal-card" id="deal-3">
+      <div class="deal-header" onclick="toggleDeal('deal-3')">
+        <div class="deal-title-block">
+          <div class="deal-entity">Atomus KCP Investments Holdings LLC</div>
+          <div class="deal-subtitle">Private Equity &mdash; Kitchen Concepts Plus Acquisition</div>
+        </div>
+        <div class="deal-badges">
+          <span class="badge badge-type">Equity</span>
+          <span class="badge badge-amount">$1.3M</span>
+        </div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="deal-body">
+        <div class="deal-content">
+
+          <div class="section-title" style="padding-top: var(--space-5);">Deal Terms</div>
+          <div class="terms-grid" style="padding-top: var(--space-2);">
+            <div class="term-item"><div class="term-label">Trust Position</div><div class="term-value copper">$1,300,000</div></div>
+            <div class="term-item"><div class="term-label">Initial Wire</div><div class="term-value">$1,600,000</div></div>
+            <div class="term-item"><div class="term-label">Total AEP Raise</div><div class="term-value">~$2,300,000</div></div>
+            <div class="term-item"><div class="term-label">Trust % of AEP</div><div class="term-value copper">~56.5%</div></div>
+            <div class="term-item"><div class="term-label">AEP Ownership of KCP</div><div class="term-value">64.3%</div></div>
+            <div class="term-item"><div class="term-label">Trust Indirect KCP %</div><div class="term-value copper">~36.3%</div></div>
+            <div class="term-item"><div class="term-label">Remaining KCP</div><div class="term-value">~35.7% (shareholder rollover)</div></div>
+            <div class="term-item"><div class="term-label">Preferred Return</div><div class="term-value">8% / yr (daily accrual)</div></div>
+            <div class="term-item"><div class="term-label">Sponsor Carry</div><div class="term-value">20% after pref catch-up</div></div>
+            <div class="term-item"><div class="term-label">Excess Split</div><div class="term-value">80% LP / 20% Sponsor</div></div>
+            <div class="term-item"><div class="term-label">Entry Multiple</div><div class="term-value copper">&lt;4x EBITDA</div></div>
+            <div class="term-item"><div class="term-label">Inbound Interest</div><div class="term-value">6&ndash;7x EBITDA range</div></div>
+            <div class="term-item"><div class="term-label">Entity Type</div><div class="term-value">DE LLC (Partnership)</div></div>
+            <div class="term-item"><div class="term-label">QSBS Target</div><div class="term-value">Yes (at KCP level)</div></div>
+            <div class="term-item"><div class="term-label">Managers</div><div class="term-value">J. Rimpas, L. Prendergast</div></div>
+            <div class="term-item"><div class="term-label">Governing Law</div><div class="term-value">Delaware</div></div>
+            <div class="term-item"><div class="term-label">Jurisdiction</div><div class="term-value">NY (Erie Co.) disputes</div></div>
+            <div class="term-item"><div class="term-label">Securities</div><div class="term-value">Unregistered / Reg D 506</div></div>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Ownership Structure</div>
+            <ul class="summary-list">
+              <li>Trust contributed $1.3M of ~$2.3M total raised into the AEP investment vehicle (~56.5% of AEP)</li>
+              <li>AEP owns 64.3% of KCP &mdash; trust indirectly owns ~36.3% of Kitchen Concepts Plus</li>
+              <li>Remaining ~35.7% of KCP is rollover from existing shareholders, with potential minor dilution if an equity incentive program is adopted</li>
+              <li>Continuing to sell off the trust's ownership piece post-close &mdash; de-risking while maintaining some ownership</li>
+            </ul>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Entity Stack</div>
+            <ul class="summary-list">
+              <li><strong>Atomus KCP Investments Holdings LLC</strong> &mdash; Top-level investment vehicle (DE partnership, tax pass-through). Trust holds its position here.</li>
+              <li><strong>KCP Intermediate Holdings LLC</strong> &mdash; Intermediate holding company (C-corp)</li>
+              <li><strong>Kitchen Concepts Plus, LLC</strong> &mdash; Operating entity (pass-through). QSBS election pursued at this level.</li>
+            </ul>
+          </div>
+
+          <div class="summary-section">
+            <div class="section-title">Distribution Waterfall</div>
+            <ul class="summary-list">
+              <li><strong>First:</strong> 100% to Investor Members until all Unreturned Capital Contributions returned</li>
+              <li><strong>Second:</strong> 100% to Investor Members until full Unpaid Preferred Return received (8% compounded annually, accrued daily)</li>
+              <li><strong>Third:</strong> 100% to Sponsor Members until sponsors received 20% of aggregate preferred return distributions (catch-up)</li>
+              <li><strong>Fourth:</strong> 80% Investor Members / 20% Sponsor Members on all excess distributions</li>
+              <li>Carried interest calculated investor-by-investor, not pooled</li>
+            </ul>
+          </div>
+
+          <div class="section-title">Documents</div>
+          <div class="docs-section">
+            <a href="docs/Atomus-KCP-Investments-Holdings-LLC-Subscription-Agreement_-FINAL.pdf" target="_blank" class="doc-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Subscription Agreement <span class="file-size">PDF</span>
+            </a>
+          </div>
+
+          <button class="commentary-toggle" onclick="toggleCommentary(this)">
+            Commentary
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="commentary-body">
+            <div class="commentary-content">
+              <ul class="summary-list">
+                <li>Trust bridged the full $1.6M to get the acquisition over the finish line &mdash; deal would not have closed without this capital</li>
+                <li>After closing, late investors came in and took down exposure &mdash; $250K principal paydown cleared Sep 12, 2025 (per Leader Bank statement). Additional take-downs expected.</li>
+                <li>PLAL carry on the remaining $1.35M is ~$74,000/yr at current rates. The two debt positions generate ~$23,500/yr in net spread income, covering roughly a third of this carry. The $250K principal already returned plus the ongoing Turnout Gear refi (~$402K balloon) bring the overall portfolio net cash positive (+$206K through Feb 2026).</li>
+                <li>Result: trust owns ~36.3% of a PE acquisition at sub-4x EBITDA; inbound offers already at 6&ndash;7x</li>
+                <li>Tax structure: partnership at top (pass-through), C-corp intermediate, pass-through operating entity. QSBS pursued at KCP level for potential capital gains exclusion.</li>
+                <li>In a worst-case scenario, all debt can be cleared within 60 days</li>
+                <li>Continuing to sell off trust's ownership post-close to de-risk while maintaining some ownership</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
-
-  <!-- PLACEHOLDER for future deals -->
-  <!--
-  <div class="deal-card" id="deal-2">
-    <div class="deal-header" onclick="toggleDeal('deal-2')">
-      <div class="deal-title-block">
-        <div class="deal-entity">[Next Deal Entity]</div>
-        <div class="deal-subtitle">[Agreement Type] — [Counterparty]</div>
-      </div>
-      <div class="deal-badges">
-        <span class="badge badge-review">Pending Review</span>
-        <span class="badge badge-amount">$XXX</span>
-      </div>
-      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </div>
-    <div class="deal-body">
-      <div class="deal-content">
-        ...
-      </div>
-    </div>
-  </div>
-  -->
-
 </main>
-
-<footer class="footer">
-  <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
-</footer>
 
 <script>
 function toggleDeal(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function openDeal(id) {
   const card = document.getElementById(id);
-  card.classList.toggle('open');
+  if (!card.classList.contains('open')) card.classList.add('open');
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  document.querySelector('.sidebar').classList.remove('open');
+}
+
+function setActive(el) {
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleCommentary(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
 }
 </script>
 
